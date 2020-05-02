@@ -4,7 +4,8 @@ Mapping covid data from Italy.
 
 by *[Stefano De Sabbata](https://stefanodesabbata.com)*
 
-
+Covid data available from the [Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile
+GitHub repo](https://github.com/pcm-dpc/COVID-19).
 
 ## Credits and acknowledgements
 
