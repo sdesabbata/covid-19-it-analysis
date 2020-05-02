@@ -116,9 +116,17 @@ covid19_cases_facets <- tm_layout(
     lwd = 0.5
   ) +
   tm_credits(
-    "Stefano De Sabbata - @maps4thought\nhttps://github.com/sdesabbata/covid-19-it-analysis\nContiene dati Istat e Presidenza del Consiglio dei Ministri,\nDipartimento della Protezione Civile",
+    "Stefano De Sabbata - @maps4thought
+https://github.com/sdesabbata/covid-19-it-analysis
+Contiene dati Istat e Presidenza del Consiglio dei Ministri,
+Dipartimento della Protezione Civile
+Note: Dati popolazione Censimento 2011, Provincia del Sud 
+Sardegna approssimata alla somma delle ex provincie di 
+Carbonia-Iglesias and Medio Campidano. Le categorie in 
+legenda includono il valore all'estremo minimo ed 
+escludono quello all'estremo massimo.",
     position =c ("left", "bottom"),
-    size = 0.5
+    size = 0.4
   ) +
   tm_facets(along = "covid19_date", free.coords = FALSE)
 

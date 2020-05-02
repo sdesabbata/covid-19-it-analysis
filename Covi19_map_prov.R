@@ -117,7 +117,16 @@ covid19_cases_latest <- tm_layout(
   ) +
   tm_credits(
     paste0(
-      "Stefano De Sabbata - @maps4thought\nhttps://github.com/sdesabbata/covid-19-it-analysis\nContiene dati Istat e Presidenza del Consiglio dei Ministri,\nDipartimento della Protezione Civile",
+      "Stefano De Sabbata - @maps4thought
+https://github.com/sdesabbata/covid-19-it-analysis
+Contiene dati Istat e Presidenza del Consiglio dei Ministri,
+Dipartimento della Protezione Civile
+Note: Dati popolazione Censimento 2011,
+Provincia del Sud Sardegna approssimata
+alla somma delle ex provincie di Carbonia-
+Iglesias and Medio Campidano. Le categorie
+in legenda includono il valore all'estremo
+minimo ed escludono quello all'estremo massimo.\n",
       latest_date
     ),
     position =c ("left", "bottom"),
