@@ -65,13 +65,14 @@ provincie_covid19_all <- provincie_2011 %>%
   mutate(
     provincia_id_str = as.character(provincia_id),
     covid19_cases_incidence100k = covid19_cases / (population / 100000)
-  )
+  ) 
 
 provincie_covid19_shp <- st_as_sf(provincie_shp) %>%
   right_join(
     provincie_covid19_all,
     by = c("COD_PROV" = "provincia_id_str")
   )
+  
 
 
 # Mapping -----------------------------------------------------------------
@@ -105,4 +106,4 @@ covid19_cases_facets <- tm_layout(
   tm_facets(along = "date", free.coords = FALSE)
 
 tmap_animation(covid19_cases_facets, filename = "covid19_cases_anim.gif",
-               delay = 200, restart.delay = 200)
+               width = 1600, delay = 30)
