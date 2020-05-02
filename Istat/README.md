@@ -6,6 +6,9 @@
 
 The *Data* folder conteined in this folder is set up to store data from [Istat](https://www.istat.it). As such, data are not shared here but can be retrieved from the [Istat data portal](http://dati.istat.it).
 
+- `tavola_pop_res01.csv`
+    - [Totale della Popolazione residente al 1° Gennaio 2019 per sesso e stato civile (Dati provvisori)](http://demo.istat.it/pop2019/index1.html)
+    - Headers changed to: CodiceProvincia, Nome, TotaleMaschi, TotaleFemmine, TotalePopolazione
 - `Censimento_2011_Indicatori_famiglie_per_Province.csv`: 
     - [Censimento 2011: Ampiezza demografica per Province](http://gisportal.istat.it/bt.carto/bt.carto.html).
 - `ProvCM01012020_g_WGS84.shp`:

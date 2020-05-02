@@ -19,26 +19,30 @@ library(tmap)
 
 # Load data ---------------------------------------------------------------
 
-# Load Istat population data - Census 2011
-provincie_2011 <- read_delim("Istat/Data/Censimento_2011_Indicatori_famiglie_per_Province.csv", ";", escape_double = FALSE, trim_ws = TRUE) %>%
+provincie_2019 <- read_csv("Istat/Data/tavola_pop_res01.csv") %>%
   mutate(
-    prov_id = as.numeric(CodiceIstat)
+    prov_id = as.numeric(CodiceProvincia)
   )
 
-
-# Approximate population of Provincia del Sud Sardegna
-# to sum of Carbonia-Iglesias and Medio Campidano
-pop_sud_sardegna <- provincie_2011 %>%
-  filter(Nome %in% c("CARBONIA-IGLESIAS", "MEDIO CAMPIDANO")) %>%
-  select(`Ampiezza demografica`) %>%
-  sum()
-
-provincie_2011 <- provincie_2011 %>%
-  add_row(
-    prov_id = 111,
-    Nome = "Sud Sardegna",
-    `Ampiezza demografica` = pop_sud_sardegna
-  )
+# # Load Istat population data - Census 2011
+# provincie_2019 <- read_delim("Istat/Data/Censimento_2011_Indicatori_famiglie_per_Province.csv", ";", escape_double = FALSE, trim_ws = TRUE) %>%
+#   mutate(
+#     prov_id = as.numeric(CodiceIstat)
+#   )
+# 
+# # Approximate population of Provincia del Sud Sardegna
+# # to sum of Carbonia-Iglesias and Medio Campidano
+# pop_sud_sardegna <- provincie_2019 %>%
+#   filter(Nome %in% c("CARBONIA-IGLESIAS", "MEDIO CAMPIDANO")) %>%
+#   select(TotalePopolazione) %>%
+#   sum()
+# 
+# provincie_2019 <- provincie_2019 %>%
+#   add_row(
+#     prov_id = 111,
+#     Nome = "Sud Sardegna",
+#     TotalePopolazione = pop_sud_sardegna
+#   )
 
 
 # Load borders for provinces
@@ -57,21 +61,21 @@ dpc_covid19_ita_province_latest <- read_csv("../COVID-19/dati-province/dpc-covid
 # Merge data --------------------------------------------------------------
 
 # Merge population and covid19 cases
-prov_covid19_latest <- provincie_2011 %>%
+prov_covid19_latest <- provincie_2019 %>%
   select(
-    prov_id, Nome, `Ampiezza demografica`
+    prov_id, Nome, TotalePopolazione
   ) %>%
   right_join(
     dpc_covid19_ita_province_latest,
     by = "prov_id"
   ) %>%
   select(
-    data, prov_id, Nome, `Ampiezza demografica`, totale_casi
+    data, prov_id, Nome, TotalePopolazione, totale_casi
   ) %>%
   rename(
     covid19_date = data,
     prov_name =  Nome, 
-    population = `Ampiezza demografica`,
+    population = TotalePopolazione,
     covid19_cases = totale_casi
   )  %>%
   mutate(
@@ -119,15 +123,13 @@ covid19_cases_latest <- tm_layout(
     paste0(
       "Stefano De Sabbata - @maps4thought
 https://github.com/sdesabbata/covid-19-it-analysis
-Contiene dati Istat e Presidenza del Consiglio dei Ministri,
-Dipartimento della Protezione Civile
-Note: Dati popolazione Censimento 2011,
-Provincia del Sud Sardegna approssimata
-alla somma delle ex provincie di Carbonia-
-Iglesias and Medio Campidano. Le categorie
-in legenda includono il valore all'estremo
-minimo ed escludono quello all'estremo massimo.\n",
-      latest_date
+Contiene dati Istat e Presidenza del Consiglio dei 
+Ministri, Dipartimento della Protezione Civile
+Note: Totale della popolazione residente stimato al 
+1° Gennaio 2019 Le categorie in legenda includono 
+il valore all'estremo minimo ed escludono quello 
+all'estremo massimo.\nDati casi Covid-10 al ",
+      latest_date, "."
     ),
     position =c ("left", "bottom"),
     size = 0.5
