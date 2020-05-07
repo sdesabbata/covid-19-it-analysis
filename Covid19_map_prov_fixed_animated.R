@@ -132,6 +132,7 @@ all'estremo massimo.",
     position =c ("left", "bottom"),
     size = 0.4
   ) +
+  tm_scale_bar(position=c("right", "bottom")) +
   tm_facets(along = "covid19_date", free.coords = FALSE)
 
 # Generate gif
