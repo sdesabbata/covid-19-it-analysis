@@ -53,7 +53,8 @@ regioni_shp <- readOGR("Istat/Data/Reg01012020_g/Reg01012020_g_WGS84.shp")
 
 
 # Load Covid data
-dpc_covid19_ita_province_latest <- read_csv("../COVID-19/dati-province/dpc-covid19-ita-province-latest.csv") %>%
+#dpc_covid19_ita_province_latest <- read_csv("../COVID-19/dati-province/dpc-covid19-ita-province-latest.csv") %>%
+dpc_covid19_ita_province_latest <- read_csv("../COVID-19/dati-province/dpc-covid19-ita-province-20200630.csv") %>%
   mutate(
     prov_id = as.numeric(codice_provincia)
   )
@@ -109,7 +110,13 @@ covid19_cases_latest <- tm_layout(
   tm_shape(prov_covid19_shp) +
   tm_polygons(
     "covid19_cases_incidence100k",
-    title = "Totale casi covid-19\nper 100 mila abitanti",
+    #title = "Totale casi covid-19\nper 100 mila abitanti",
+    title = paste0(
+      "Total covid-19 cases\nper 100,000 inhabitants\n(",
+      #latest_date,
+      "data at June 30, 2020",
+      ")"
+    ),
     n = 7,
     style = "jenks",
     palette = "viridis",
@@ -122,19 +129,28 @@ covid19_cases_latest <- tm_layout(
     lwd = 0.5
   ) +
   tm_credits(
-    paste0(
-      "Stefano De Sabbata - @maps4thought
-https://github.com/sdesabbata/covid-19-it-analysis
-Contiene dati Istat e Presidenza del Consiglio dei 
-Ministri, Dipartimento della Protezione Civile
-Note: Totale della popolazione residente stimato al 
-1° Gennaio 2019 Le categorie in legenda includono 
-il valore all'estremo minimo ed escludono quello 
-all'estremo massimo.\nDati casi Covid-10 al ",
-      latest_date, "."
-    ),
-    position =c ("left", "bottom"),
-    size = 0.5
+"Stefano De Sabbata - @maps4thought
+https://github.com/sdesabbata/covid-19-it-analysis",
+    position = c("right", "bottom"),
+    size = 0.6,
+    align = "right"
+  ) +
+  tm_credits(
+"Contains data from Istat (CC BY 3.0 
+IT) and Department of Civil Protection, 
+Presidency of the Council of Ministers 
+(CC-BY-4.0) — elaborazione di dati 
+Istat (CC BY 3.0 IT) e Presidenza del 
+Consiglio dei Ministri, Dipartimento 
+della Protezione Civile (CC-BY-4.0).
+
+
+Note: Population estimates at January 
+1st, 2019. The categories in the legend 
+include the minimum value and exclude 
+the maximum value of the bracket.",
+    position = c("left", "bottom"),
+    size = 0.6
   )
 
 # Save
