@@ -54,7 +54,7 @@ regioni_shp <- readOGR("Istat/Data/Reg01012020_g/Reg01012020_g_WGS84.shp")
 
 # Load Covid data
 #dpc_covid19_ita_province_latest <- read_csv("../COVID-19/dati-province/dpc-covid19-ita-province-latest.csv") %>%
-dpc_covid19_ita_province_latest <- read_csv("../COVID-19/dati-province/dpc-covid19-ita-province-20200630.csv") %>%
+dpc_covid19_ita_province_latest <- read_csv("../COVID-19/dati-province/dpc-covid19-ita-province-20200701.csv") %>%
   mutate(
     prov_id = as.numeric(codice_provincia)
   )
@@ -89,7 +89,7 @@ prov_covid19_latest <- provincie_2019 %>%
 
 # Merge with geometries
 prov_covid19_shp <- st_as_sf(provincie_shp) %>%
-  right_join(
+  left_join(
     prov_covid19_latest,
     by = c("COD_PROV" = "prov_id_str")
   )
@@ -114,7 +114,7 @@ covid19_cases_latest <- tm_layout(
     title = paste0(
       "Total covid-19 cases\nper 100,000 inhabitants\n(",
       #latest_date,
-      "data at June 30, 2020",
+      "data at July 1st, 2020",
       ")"
     ),
     n = 7,
