@@ -12,9 +12,11 @@ rm(list = ls())
 # Libraries ---------------------------------------------------------------
 
 library(tidyverse)
+library(magrittr)
 library(lubridate)
 library(rgdal)
 library(tmap)
+library(classInt)
 library(sf)
 
 
@@ -114,11 +116,17 @@ covid19_cases_latest <- tm_layout(
     title = paste0(
       "Total covid-19 cases\nper 100,000 inhabitants\n(",
       #latest_date,
-      "data at July 1st, 2020",
+      "July 1st, 2020",
       ")"
     ),
-    n = 7,
-    style = "jenks",
+    #
+    #n = 7,
+    #style = "jenks",
+    style = "fixed",
+    breaks = prov_covid19_shp %>% pull(covid19_cases_incidence100k) %>% classIntervals(style = "jenks", n = 7) %$% brks,
+    as.count = TRUE,
+    #legend.format = list(digits = 2),
+    #
     palette = "viridis",
     #border.col = "#cccccc",
     lwd = 0.1
@@ -143,12 +151,7 @@ Presidency of the Council of Ministers
 Istat (CC BY 3.0 IT) e Presidenza del 
 Consiglio dei Ministri, Dipartimento 
 della Protezione Civile (CC-BY-4.0).
-
-
-Note: Population estimates at January 
-1st, 2019. The categories in the legend 
-include the minimum value and exclude 
-the maximum value of the bracket.",
+Population estimates Jan. 1st, 2019.",
     position = c("left", "bottom"),
     size = 0.6
   )
